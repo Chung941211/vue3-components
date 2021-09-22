@@ -1,4 +1,4 @@
-# 我的vue3公共组件库
+# 我的vue3公共组件库 （vue3-components）
 
 ## Project setup
 ```
