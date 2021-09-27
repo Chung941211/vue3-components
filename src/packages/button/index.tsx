@@ -6,9 +6,8 @@ import {
 
 const Button = defineComponent({
   name: 'Button',
-  setup(props, { slots }) {
+  setup(props, { attrs ,slots, emit }) {
     const alertNode = ref();
-
 
     const classes = computed(() => {
       const pre = prefixCls.value;
@@ -22,12 +21,18 @@ const Button = defineComponent({
         [`${pre}-rtl`]: direction.value === 'rtl',
       };
     });
+
+    const handleClick = (event: Event) => {
+      emit('click', event);
+    };
     return () => {
   
       return (
-        <div class={classes} style="getStyle">
-          <div class="nut-button__warp">
-            <nut-icon class="nut-icon-loading" v-if="loading"></nut-icon>
+        <div
+          class={classes}
+          onClick={handleClick}
+          style={attrs.style}>
+          <div class="button__warp">
             <slot></slot>
           </div>
         </div>
