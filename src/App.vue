@@ -1,12 +1,13 @@
 <template>
-  1
+  <Button>111</Button>
 </template>
 
 <script>
-
+import Button from './packages/index';
 export default {
   name: 'App',
   components: {
+    Button
   }
 }
 </script>
