@@ -8,6 +8,8 @@ const Button = defineComponent({
   name: 'Button',
   setup(props, { attrs ,slots, emit }) {
     const alertNode = ref();
+    
+    const { prefixCls, autoInsertSpaceInButton, direction } = props;
 
     const classes = computed(() => {
       const pre = prefixCls.value;
