@@ -1,48 +1,50 @@
+import { useFormItemProps } from '@element-plus/hooks'
+import { buildProps } from '@element-plus/utils/props'
 
-import type { ExtractPropTypes, PropType } from 'vue';
+import type { ExtractPropTypes } from 'vue'
 
+export const buttonType = [
+  'default',
+  'primary',
+  'success',
+  'warning',
+  'info',
+  'danger',
+  'text',
+  '',
+] as const
+export const buttonSize = ['', 'large', 'medium', 'small', 'mini'] as const
+export const buttonNativeType = ['button', 'submit', 'reset'] as const
 
-const ButtonTypes = tuple('default', 'primary', 'ghost', 'dashed', 'link', 'text');
-export type ButtonType = typeof ButtonTypes[number];
-const ButtonShapes = tuple('circle', 'round');
-export type ButtonShape = typeof ButtonShapes[number];
+export const buttonProps = buildProps({
+  ...useFormItemProps,
+  type: {
+    type: String,
+    values: buttonType,
+    default: '',
+  },
+  icon: {
+    type: String,
+    default: '',
+  },
+  nativeType: {
+    type: String,
+    values: buttonNativeType,
+    default: 'button',
+  },
+  loading: Boolean,
+  plain: Boolean,
+  autofocus: Boolean,
+  round: Boolean,
+  circle: Boolean,
+} as const)
 
-const ButtonHTMLTypes = tuple('submit', 'button', 'reset');
-export type ButtonHTMLType = typeof ButtonHTMLTypes[number];
-
-export type LegacyButtonType = ButtonType | 'danger';
-export function convertLegacyProps(type?: LegacyButtonType): ButtonProps {
-  if (type === 'danger') {
-    return { danger: true };
-  }
-  return { type };
+export const buttonEmits = {
+  click: (evt: MouseEvent) => evt instanceof MouseEvent,
 }
 
-const buttonProps = () => ({
-  prefixCls: PropTypes.string,
-  type: PropTypes.oneOf(ButtonTypes),
-  htmlType: PropTypes.oneOf(ButtonHTMLTypes).def('button'),
-  shape: PropTypes.oneOf(ButtonShapes),
-  size: {
-    type: String as PropType<SizeType>,
-  },
-  loading: {
-    type: [Boolean, Object] as PropType<boolean | { delay?: number }>,
-    default: (): boolean | { delay?: number } => false,
-  },
-  disabled: PropTypes.looseBool,
-  ghost: PropTypes.looseBool,
-  block: PropTypes.looseBool,
-  danger: PropTypes.looseBool,
-  icon: PropTypes.VNodeChild,
-  href: PropTypes.string,
-  target: PropTypes.string,
-  title: PropTypes.string,
-  onClick: {
-    type: Function as PropType<(event: MouseEvent) => void>,
-  },
-});
+export type ButtonProps = ExtractPropTypes<typeof buttonProps>
+export type ButtonEmits = typeof buttonEmits
 
-export type ButtonProps = Partial<ExtractPropTypes<ReturnType<typeof buttonProps>>>;
-
-export default buttonProps;
+export type ButtonType = ButtonProps['type']
+export type ButtonNativeType = ButtonProps['nativeType']
